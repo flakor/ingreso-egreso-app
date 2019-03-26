@@ -7,10 +7,15 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 
-
+import { Store } from '@ngrx/store';
 
 import Swal from 'sweetalert2';
 import { User } from './user.model';
+import { AppState } from '../app.reducer';
+import { ActivarLoadingActions, DesactivarLoadingActions } from '../shared/ui.actions';
+import { SetUserAction } from './auth.actions';
+import { Subscription } from 'rxjs';
+
 
 
 @Injectable({
@@ -18,18 +23,39 @@ import { User } from './user.model';
 })
 export class AuthService {
 
+  private userSubscription: Subscription = new Subscription();
+
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
-              private afDB: AngularFirestore) { }
+              private afDB: AngularFirestore,
+              private store: Store<AppState>) { }
 
   initAuthListener() {
     this.afAuth.authState.subscribe((fbUser: firebase.User) => {
-      console.log(fbUser);
+      // console.log(fbUser);
+      if (fbUser) {
+        this.userSubscription = this.afDB.doc(`${fbUser.uid}/usuario`).valueChanges()
+          .subscribe((usuarioObj: any) => {
 
-    })
+            // console.log(usuarioObj);
+            const newUser = new User(usuarioObj);
+            // console.log(newUser);
+            this.store.dispatch(new SetUserAction(newUser));
+
+
+          });
+      } else {
+
+        this.userSubscription.unsubscribe();
+
+      }
+
+    });
   }
 
   crearUsuario(nombre: string, email: string, password: string) {
+
+    this.store.dispatch(new ActivarLoadingActions());
 
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
@@ -41,12 +67,13 @@ export class AuthService {
           email: resp.user.email
         };
         this.afDB.doc(`${user.uid}/usuario`)
-        .set(user)
-        .then((result) => {
-          console.log(result);
-          this.router.navigate(['/']);
+          .set(user)
+          .then((result) => {
+            console.log(result);
+            this.router.navigate(['/']);
+            this.store.dispatch(new DesactivarLoadingActions());
           }).catch((err) => {
-          console.error(err);
+            console.error(err);
           });
 
         this.router.navigate(['/']);
@@ -54,6 +81,7 @@ export class AuthService {
       })
       .catch((error) => {
         // console.error(error);
+        this.store.dispatch(new DesactivarLoadingActions());
         Swal.fire({
           title: 'Error!',
           text: error.message,
@@ -67,13 +95,16 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
+    this.store.dispatch(new ActivarLoadingActions());
     this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(email, password)
       .then((resp) => {
         // console.log(resp);
         this.router.navigate(['/']);
+        this.store.dispatch(new DesactivarLoadingActions());
 
       }).catch((error) => {
         // console.error(error);
+        this.store.dispatch(new DesactivarLoadingActions());
         Swal.fire({
           title: 'Error!',
           text: error.message,
