@@ -5,18 +5,26 @@
 
                 <div class="user-wrapper">
                     <div class="profile-image">
-                        <img src="assets/images/faces/face1.jpg" alt="profile image">
+                        <img src="assets/images/faces/face7.jpg" alt="profile image">
                     </div>
 
                     <div class="text-wrapper">
                         <p class="profile-name">{{nombre}}</p>
                         <div>
-                            <small class="designation text-muted">Gerente</small>
+                            <small class="designation text-muted">Administrador</small>
                         </div>
                     </div>
                 </div>
 
             </div>
+        </li>
+
+
+        <li class="nav-item">
+            <a [routerLink]="['/stream']" routerLinkActive="router-link-active" class="nav-link">
+                <i class="menu-icon fa fa-music"></i>
+                <span class="menu-title">Radio</span>
+            </a>
         </li>
 
         <li class="nav-item">

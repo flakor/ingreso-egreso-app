@@ -4,6 +4,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { IngresoEgresoComponent } from './ingreso-egreso.component';
 import { EstadisticaComponent } from './estadistica/estadistica.component';
 import { DetalleComponent } from './detalle/detalle.component';
+import { StreamComponent } from './stream/stream.component';
 import { OrdenIngresoEgresoPipe } from './orden-ingreso-egreso.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
@@ -18,6 +19,7 @@ import { ingresoEgresoReducer } from './ingreso-egreso.reducer';
     IngresoEgresoComponent,
     EstadisticaComponent,
     DetalleComponent,
+    StreamComponent,
     OrdenIngresoEgresoPipe
   ],
   imports: [

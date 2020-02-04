@@ -27,13 +27,13 @@ export class EstadisticaComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.store.select('ingresoEgreso')
-    .subscribe ( ingresoEgreso =>{
+    .subscribe ( ingresoEgreso => {
 
-      this.contarIngresoEgreso( ingresoEgreso.items )
+      this.contarIngresoEgreso( ingresoEgreso.items );
 
     });
   }
-  contarIngresoEgreso( items: IngresoEgreso[]){
+  contarIngresoEgreso( items: IngresoEgreso[]) {
 
       this.ingresos = 0;
       this.egresos = 0;

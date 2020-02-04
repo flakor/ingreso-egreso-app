@@ -15129,8 +15129,8 @@ input:focus {
     font-family: "Poppins",
     sans-serif;
     background: linear-gradient(120deg,
-    #00e4d0,
-    #5983e8);
+    #e4ba00,
+    #e8aa59);
     transition: background 0.25s ease;
     -webkit-transition: background 0.25s ease;
     -moz-transition: background 0.25s ease;
@@ -15414,10 +15414,10 @@ address p {
     margin-bottom: 0;
 }
 .blockquote-primary {
-    border-color: #308ee0;
+    border-color: #e0b130;
 }
 .blockquote-primary .blockquote-footer {
-    color: #308ee0;
+    color: #e09430;
 }
 .blockquote-secondary {
     border-color: #e5e5e5;

@@ -28,6 +28,7 @@ import { AuthModule } from './auth/auth.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-   
+
   ],
   providers: [],
   bootstrap: [AppComponent]
